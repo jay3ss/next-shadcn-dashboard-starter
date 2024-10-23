@@ -23,12 +23,14 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
+import { states } from '@/constants/data';
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.'
   }),
-  country: z.string({
-    required_error: 'Please select a country.'
+  state: z.string({
+    required_error: 'Please select a state.'
   }),
   email: z.string().email({
     message: 'Please enter a valid email address.'
@@ -46,7 +48,7 @@ export default function EmployeeForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      country: '',
+      state: '',
       email: '',
       company: '',
       gender: undefined
@@ -83,25 +85,30 @@ export default function EmployeeForm() {
               />
               <FormField
                 control={form.control}
-                name="country"
+                name="state"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Country</FormLabel>
+                    <FormLabel>State</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a country" />
+                          <SelectValue placeholder="Select a state" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="usa">USA</SelectItem>
+                        {states.map((state) => (
+                          <SelectItem value={state.name}>
+                            {state.name}
+                          </SelectItem>
+                        ))}
+                        {/* <SelectItem value="usa">USA</SelectItem>
                         <SelectItem value="uk">UK</SelectItem>
                         <SelectItem value="canada">Canada</SelectItem>
                         <SelectItem value="australia">Australia</SelectItem>
                         <SelectItem value="germany">Germany</SelectItem>
                         <SelectItem value="france">France</SelectItem>
                         <SelectItem value="japan">Japan</SelectItem>
-                        <SelectItem value="brazil">Brazil</SelectItem>
+                        <SelectItem value="brazil">Brazil</SelectItem> */}
                       </SelectContent>
                     </Select>
                     <FormMessage />

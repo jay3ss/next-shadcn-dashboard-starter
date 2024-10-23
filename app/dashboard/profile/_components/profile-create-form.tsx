@@ -32,6 +32,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 
+import { states } from '@/constants/data';
+
 interface ProfileFormType {
   initialData: any | null;
   categories: any;
@@ -63,7 +65,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
         employer: '',
         startdate: '',
         enddate: '',
-        jobcountry: '',
+        jobstate: '',
         jobcity: ''
       }
     ]
@@ -128,11 +130,11 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
     {
       id: 'Step 1',
       name: 'Personal Information',
-      fields: ['firstname', 'lastname', 'email', 'contactno', 'country', 'city']
+      fields: ['firstname', 'lastname', 'email', 'contactno', 'state', 'city']
     },
     {
       id: 'Step 2',
-      name: 'Professional Informations',
+      name: 'Professional Information',
       // fields are mapping and flattening for the error to be trigger  for the dynamic fields
       fields: fields
         ?.map((_, index) => [
@@ -140,7 +142,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
           `jobs.${index}.employer`,
           `jobs.${index}.startdate`,
           `jobs.${index}.enddate`,
-          `jobs.${index}.jobcountry`,
+          `jobs.${index}.jobstate`,
           `jobs.${index}.jobcity`
           // Add other field names as needed
         ])
@@ -174,7 +176,6 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
     }
   };
 
-  const countries = [{ id: 'wow', name: 'india' }];
   const cities = [{ id: '2', name: 'kerala' }];
 
   return (
@@ -312,10 +313,10 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                 />
                 <FormField
                   control={form.control}
-                  name="country"
+                  name="state"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Country</FormLabel>
+                      <FormLabel>State</FormLabel>
                       <Select
                         disabled={loading}
                         onValueChange={field.onChange}
@@ -326,15 +327,15 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                           <SelectTrigger>
                             <SelectValue
                               defaultValue={field.value}
-                              placeholder="Select a country"
+                              placeholder="Select a State"
                             />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
+                        <SelectContent className="max-h-[35rem] overflow-y-auto">
                           {/* @ts-ignore  */}
-                          {countries.map((country) => (
-                            <SelectItem key={country.id} value={country.id}>
-                              {country.name}
+                          {states.map((state) => (
+                            <SelectItem key={state.abbr} value={state.abbr}>
+                              {state.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -486,10 +487,10 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                           />
                           <FormField
                             control={form.control}
-                            name={`jobs.${index}.jobcountry`}
+                            name={`jobs.${index}.jobstate`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Job country</FormLabel>
+                                <FormLabel>Job state</FormLabel>
                                 <Select
                                   disabled={loading}
                                   onValueChange={field.onChange}
@@ -500,17 +501,17 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                                     <SelectTrigger>
                                       <SelectValue
                                         defaultValue={field.value}
-                                        placeholder="Select your job country"
+                                        placeholder="Select your job state"
                                       />
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {countries.map((country) => (
+                                    {states.map((state) => (
                                       <SelectItem
-                                        key={country.id}
-                                        value={country.id}
+                                        key={state.abbr}
+                                        value={state.abbr}
                                       >
-                                        {country.name}
+                                        {state.name}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -568,7 +569,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({
                         employer: '',
                         startdate: '',
                         enddate: '',
-                        jobcountry: '',
+                        jobstate: '',
                         jobcity: ''
                       })
                     }

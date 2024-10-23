@@ -20,7 +20,6 @@ export type User = {
   street: string;
   city: string;
   state: string;
-  country: string;
   zipcode: string;
   longitude: number;
   latitude: number;
@@ -88,7 +87,6 @@ export const fakeUsers = {
         )} ${faker.location.street()}`,
         city: faker.helpers.arrayElement(cities),
         state: faker.helpers.arrayElement(states),
-        country: 'USA',
         zipcode: faker.location.zipCode(),
         longitude: faker.location.longitude(),
         latitude: faker.location.latitude(),
@@ -135,8 +133,7 @@ export const fakeUsers = {
           'job',
           'city',
           'street',
-          'state',
-          'country'
+          'state'
         ]
       });
     }
